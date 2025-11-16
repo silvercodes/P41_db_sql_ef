@@ -1,4 +1,4 @@
--- SELECT [DISTINCT] [TOP] <columns list>
+-- SELECT [DISTINCT] [TOP] <statements>
 -- [FROM <source>]
 -- [WHERE <condition>]
 -- [ORDER BY <sorting>]
@@ -86,6 +86,92 @@ SELECT
 	id,
 	name,
 	salary / 100 * bonus_percent AS [res_1],
-	salary / 100 * ISNULL(bonus_percent, 0) AS [res_1]
+	salary / 100 * ISNULL(bonus_percent, 0) AS [res_2],
+	salary / 100 * COALESCE(bonus_percent, extra_percent, 0) AS [res_3]
 FROM employees;
+
+
+
+----------------  ORDER BY ------------------
+
+SELECT
+	last_name,
+	first_name,
+	salary
+FROM employees
+ORDER BY last_name DESC;
+
+
+SELECT
+	last_name,
+	first_name,
+	salary
+FROM employees
+ORDER BY salary DESC, last_name;
+
+
+
+------- необднозначность результата -----------
+-- Вывести первых 3-х работников с наибольшей ЗП
+-- :-(((
+SELECT TOP 3
+	id,
+	last_name,
+	first_name,
+	salary
+FROM employees
+ORDER BY salary DESC;
+
+-- :-)))
+SELECT TOP 3
+	id,
+	last_name,
+	first_name,
+	salary
+FROM employees
+ORDER BY salary DESC, id;
+
+
+
+SELECT
+	id,
+	first_name,
+	last_name
+FROM employees
+ORDER BY CONCAT(first_name, last_name);
+
+
+
+
+SELECT 
+	CONCAT(last_name, first_name) AS [full_name]
+FROM employees
+ORDER BY full_name
+
+
+
+
+SELECT bonus_percent
+FROM employees
+ORDER BY ISNULL(bonus_percent, 100);
+
+
+
+-- Выбрать 2 наиболее маленькие ЗП
+-- :-|||
+--declare @max_salary float = (SELECT MAX(salary) from employees);
+--SELECT @max_salary;
+
+--SELECT DISTINCT TOP 2
+--	salary,
+--	(SELECT MAX(salary) from employees) AS [xxx]
+--FROM employees
+--ORDER BY ISNULL(salary, (SELECT MAX(salary) from employees));
+
+
+
+SELECT DISTINCT TOP 2
+	salary
+FROM employees
+ORDER BY ISNULL(salary, 999999);
 
