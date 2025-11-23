@@ -1,4 +1,4 @@
--- Получить инфу по работникам из деп 3
+-- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ 3
 SELECT
 	id,
 	last_name,
@@ -8,7 +8,7 @@ SELECT
 FROM employees
 WHERE department_id = 3
 
--- Получить работников топ-менеджеров
+-- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 SELECT *
 FROM employees
 WHERE manager_id IS NULL;
@@ -28,8 +28,8 @@ ORDER BY amount DESC;
 
 
 ---------- BETWEEN IN LIKE ---------
-SELECT id, name, salary
-FROM employees
+-- SELECT id, name, salary
+-- FROM employees
 
 -- WHERE salary >= 2000 AND salary <= 3000;
 -- WHERE salary BETWEEN 2000 AND 3000;
@@ -37,6 +37,45 @@ FROM employees
 -- WHERE NOT (salary >= 2000 AND salary <= 3000);
 -- WHERE salary NOT BETWEEN 2000 AND 3000;
 
---WHERE salary BETWEEN 2000 AND 3000
+-- WHERE salary BETWEEN 2000 AND 3000
 --		AND department_id = 3;
 
+-- WHERE department_id = 3 OR department_id = 4;
+-- WHERE department_id IN (3, 4);
+-- WHERE department_id NOT IN (3, 4);
+
+-- WHERE department_id IN (3, 4, NULL);						:-((( -- NULL РІ IN РќР• РРЎРџРћР›Р¬Р—РћР’РђРўР¬ !!!
+-- WHERE department_id IN (3, 4) OR department_id IS NULL	:-)))
+-- WHERE ISNULL(department_id, -1) IN (3, 4, -1);			:-)))
+
+
+-- %	_	[abc]	[^abc]	[a-c]  [^a-c]
+-- SELECT id, name, salary
+-- FROM employees
+-- WHERE name LIKE N'РџРµ%';
+-- WHERE last_name LIKE N'%РѕРІ';
+-- WHERE email LIKE '%.pro'
+-- WHERE email LIKE '%.c__';
+-- WHERE email LIKE '%.[cbr]__';
+-- WHERE email LIKE '%.[^a-c]__';
+-- WHERE email LIKE '%.!%__' ESCAPE '!';
+
+-- WHERE LOWER(email) LIKE '%.pro';			-- :-))) !!!
+
+
+--SELECT *
+--FROM employees
+--WHERE YEAR(birthday) = 1982;
+
+
+-- РќР°Р№С‚Рё СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ, Сѓ РєРѕС‚РѕСЂС‹С… СЃРµРіРѕРґРЅСЏ РґРµРЅСЊ СЂРѕР¶РґРµРЅРёСЏ
+--SELECT *
+--FROM employees
+--WHERE MONTH(birthday) = MONTH(GETDATE()) AND DAY(birthday) = DAY(GETDATE());
+
+
+--DECLARE @d date = '19871122';
+--SELECT DATEDIFF(year, @d, GETDATE());
+
+
+--SELECT CONVERT(DATE, '20251122', 104);
