@@ -88,3 +88,35 @@ SELECT
 FROM departments d LEFT JOIN employees e ON d.id = e.department_id
 GROUP BY d.id, d.title
 HAVING MAX(e.hire_date) IS NOT NULL
+
+
+
+
+SELECT
+	d.id,
+	d.title,
+	ISNULL(e.name, '---') AS [emp_name]
+FROM employees e
+	JOIN (
+		SELECT
+			MAX(id) AS [maxEmpId]
+		FROM employees
+		GROUP BY department_id
+	) lastEmp ON e.id = lastEmp.maxEmpId
+	RIGHT JOIN departments d ON e.department_id = d.id
+
+
+
+
+-- TASK
+-- Посчитать кол-во сотрудников по каждому отделу для каждой должности
+-- | department | position | count |
+
+SELECT
+	d.title			AS [department],
+	p.title			AS [position],
+	COUNT(e.id)		AS [count]
+FROM departments d
+	CROSS JOIN positions p
+	LEFT JOIN employees e ON d.id = e.department_id AND p.id = e.position_id
+GROUP BY d.id, d.title, p.id, p.title
